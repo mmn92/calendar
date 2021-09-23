@@ -1,0 +1,34 @@
+.calendar {
+  display: flex; 
+  flex-direction: column; 
+  width: 80%; 
+  margin: 0 auto;
+
+  .calendar__arrow--left,
+  .calendar__arrow--right {
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border: 3px solid black;
+    transform: rotate(45deg);
+  }
+
+  .calendar__arrow--left {
+    border-top: 0;
+    border-right: 0;
+  }
+  .calendar__arrow--right {
+    border-bottom: 0;
+    border-left: none;
+  }
+
+  .calendar__month {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .fade-day {
+    opacity: 0.2;
+  }
+}

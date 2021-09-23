@@ -1,0 +1,69 @@
+<main class="calendar">
+  <div class="calendar__month">
+    <span class="calendar__arrow--left" (click)="clickLeft()"></span>
+    <h3 style="display: inline-block">{{ monthsOfYear[currentMonth] }}</h3>
+    <span class="calendar__arrow--right" (click)="clickRight()"></span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let day of daysOfWeek; index as i">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of weeksOfMonth; index as i">
+        <td
+          [ngClass]="determineClass(week.sunday)"
+          style="text-align: center"
+          class="sunday-cell"
+        >
+          {{ week.sunday?.getDate() }}
+        </td>
+        <td
+          [ngClass]="determineClass(week.monday)"
+          style="text-align: center"
+          class="monday-cell"
+        >
+          {{ week.monday?.getDate() }}
+        </td>
+        <td
+          [ngClass]="determineClass(week.tuesday)"
+          style="text-align: center"
+          class="tuesday-cell"
+        >
+          {{ week.tuesday?.getDate() }}
+        </td>
+        <td
+          [ngClass]="determineClass(week.wednesday)"
+          style="text-align: center"
+          class="wednesday-cell"
+        >
+          {{ week.wednesday?.getDate() }}
+        </td>
+        <td
+          [ngClass]="determineClass(week.thursday)"
+          style="text-align: center"
+          class="thursday-cell"
+        >
+          {{ week.thursday?.getDate() }}
+        </td>
+        <td
+          [ngClass]="determineClass(week.friday)"
+          style="text-align: center"
+          class="friday-cell"
+        >
+          {{ week.friday?.getDate() }}
+        </td>
+        <td
+          [ngClass]="determineClass(week.saturday)"
+          style="text-align: center"
+          class="saturday-cell"
+        >
+          {{ week.saturday?.getDate() }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+</main>
