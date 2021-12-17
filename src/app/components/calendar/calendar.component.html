@@ -15,52 +15,59 @@
       <tr *ngFor="let week of weeksOfMonth; index as i">
         <td
           [ngClass]="determineClass(week.sunday)"
+          (click)="handleState(week.sunday)"
           style="text-align: center"
-          class="sunday-cell"
+          class="day sunday-cell"
         >
-          {{ week.sunday?.getDate() }}
+          <p class="dayDate">{{ week.sunday?.getDate() }}</p>
         </td>
         <td
           [ngClass]="determineClass(week.monday)"
+          (click)="handleState(week.monday)"
           style="text-align: center"
-          class="monday-cell"
+          class="day monday-cell"
         >
-          {{ week.monday?.getDate() }}
+          <p class="dayDate">{{ week.monday?.getDate() }}</p>
         </td>
         <td
           [ngClass]="determineClass(week.tuesday)"
+          (click)="handleState(week.tuesday)"
           style="text-align: center"
-          class="tuesday-cell"
+          class="day tuesday-cell"
         >
-          {{ week.tuesday?.getDate() }}
+          <p class="dayDate">{{ week.tuesday?.getDate() }}</p>
         </td>
         <td
           [ngClass]="determineClass(week.wednesday)"
+          (click)="handleState(week.wednesday)"
           style="text-align: center"
-          class="wednesday-cell"
+          class="day wednesday-cell"
         >
-          {{ week.wednesday?.getDate() }}
+          <p class="dayDate">{{ week.wednesday?.getDate() }}</p>
         </td>
         <td
           [ngClass]="determineClass(week.thursday)"
+          (click)="handleState(week.thursday)"
           style="text-align: center"
-          class="thursday-cell"
+          class="day thursday-cell"
         >
-          {{ week.thursday?.getDate() }}
+          <p class="dayDate">{{ week.thursday?.getDate() }}</p>
         </td>
         <td
           [ngClass]="determineClass(week.friday)"
+          (click)="handleState(week.friday)"
           style="text-align: center"
-          class="friday-cell"
+          class="day friday-cell"
         >
-          {{ week.friday?.getDate() }}
+          <p class="dayDate">{{ week.friday?.getDate() }}</p>
         </td>
         <td
           [ngClass]="determineClass(week.saturday)"
+          (click)="handleState(week.saturday)"
           style="text-align: center"
-          class="saturday-cell"
+          class="day saturday-cell"
         >
-          {{ week.saturday?.getDate() }}
+          <p class="dayDate">{{ week.saturday?.getDate() }}</p>
         </td>
       </tr>
     </tbody>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { calendarState } from 'src/app/utils/types';
 import { DateUtils } from '../../utils/DateUtils';
 
 @Component({
@@ -25,6 +26,12 @@ export class CalendarComponent implements OnInit {
   public weeksOfMonth: Array<Record<string, Date>>;
   public currentMonth: number;
   public currentYear: number;
+  public initialSelection: Date | null = null;
+  public finalSelection: Date | null = null;
+  private state: calendarState = 'idle';
+  selectedRange: Array<Date> = [];
+
+  @Input() dateClass: (data: Date) => string = (data) => '';
 
   constructor(private dateUtils: DateUtils) {
     this.currentMonth = new Date().getMonth();
@@ -34,16 +41,7 @@ export class CalendarComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    // console.log(
-    //   this.dateUtils.formatMonthToCalendar(this.dateUtils.getDaysofMonth(8))
-    // );
-    console.log(Object.keys(this.weeksOfMonth[0]));
-    // console.log(this.dateUtils.getDaysofMonth(8));
-    // this.weeksOfMonth = this.dateUtils.formatMonthToCalendar(
-    //   this.dateUtils.getDaysofMonth(8)
-    // );
-  }
+  ngOnInit(): void {}
 
   setNewMonth(month: number) {
     this.weeksOfMonth = this.dateUtils.formatMonthToCalendar(
@@ -72,8 +70,64 @@ export class CalendarComponent implements OnInit {
   }
 
   determineClass(day: Date) {
-    console.log('called: ', day);
-    const monthOfDay = day.getMonth();
-    return monthOfDay === this.currentMonth ? 'regular-day' : 'fade-day';
+    let dayClass = '';
+    let customClasses = this.dateClass(day);
+
+    dayClass +=
+      this.initialSelection &&
+      this.dateUtils.isSameDay(day, this.initialSelection)
+        ? ' initial-selection'
+        : '';
+
+    dayClass +=
+      this.finalSelection && this.dateUtils.isSameDay(day, this.finalSelection)
+        ? ' final-selection'
+        : '';
+
+    dayClass +=
+      this.selectedRange.filter((date) => this.dateUtils.isSameDay(date, day))
+        .length > 0
+        ? ' is-selected'
+        : '';
+
+    dayClass += `${dayClass} ${customClasses}`;
+
+    return dayClass;
+  }
+
+  handleState(date: Date) {
+    console.log('called state; state: ', this.state);
+    console.log('input date: ', date);
+    switch (this.state) {
+      case 'idle':
+        this.initialSelection = date;
+        this.state = 'selecting';
+        break;
+      case 'selecting':
+        if (
+          this.initialSelection &&
+          !this.dateUtils.isSameDay(date, this.initialSelection)
+        ) {
+          this.finalSelection = date;
+          this.state = 'selected';
+          this.selectedRange = this.dateUtils.makePeriodArray(
+            this.initialSelection,
+            this.finalSelection
+          );
+          const checkOrder = this.dateUtils.checkOrder(
+            this.initialSelection,
+            this.finalSelection
+          );
+          this.initialSelection = checkOrder.initialDay;
+          this.finalSelection = checkOrder.finalDay;
+        }
+        break;
+      case 'selected':
+        this.initialSelection = date;
+        this.finalSelection = new Date(0);
+        this.state = 'selecting';
+        this.selectedRange = [];
+        break;
+    }
   }
 }

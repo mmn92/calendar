@@ -94,4 +94,32 @@ export class DateUtils {
 
     return result;
   }
+
+  checkOrder(initialDay: Date, finalDay: Date) {
+    if (initialDay.getTime() > finalDay.getTime()) {
+      return {
+        initialDay: finalDay,
+        finalDay: initialDay,
+      };
+    } else {
+      return {
+        initialDay,
+        finalDay,
+      };
+    }
+  }
+
+  makePeriodArray(initialDay: Date, finalDay: Date): Array<Date> {
+    const orderedDays = this.checkOrder(initialDay, finalDay);
+    let dayBegin = orderedDays.initialDay;
+    let dayEnd = orderedDays.finalDay;
+
+    let period = [];
+
+    while (dayBegin.getTime() <= dayEnd.getTime()) {
+      period.push(dayBegin);
+      dayBegin = this.addDays(dayBegin, 1);
+    }
+    return period;
+  }
 }

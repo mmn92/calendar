@@ -1,7 +1,7 @@
 .calendar {
-  display: flex; 
-  flex-direction: column; 
-  width: 80%; 
+  display: flex;
+  flex-direction: column;
+  width: 80%;
   margin: 0 auto;
 
   .calendar__arrow--left,
@@ -22,13 +22,90 @@
     border-left: none;
   }
 
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
   .calendar__month {
     display: flex;
     align-items: center;
     justify-content: space-around;
   }
-  
+
+  .day {
+    position: relative;
+    padding: 8px 0;
+    width: calc(100% / 7);
+
+    .dayDate {
+      cursor: pointer;
+      position: relative;
+      width: min-content;
+      padding: 0;
+      margin: 0 auto;
+      z-index: 2;
+    }
+  }
+
   .fade-day {
     opacity: 0.2;
+  }
+
+  .today {
+    color: red;
+  }
+
+  .is-selected {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      transform: translateY(50%);
+      background-color: rgba(158, 122, 55, 0.5);
+    }
+  }
+
+  .initial-selection {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 100%;
+      width: 50%;
+      border-radius: 50%;
+      background-color: rgb(216, 168, 79);
+      z-index: 1;
+    }
+
+    &.is-selected::after {
+      left: initial;
+      right: 0;
+      width: 50%;
+    }
+  }
+
+  .final-selection {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 100%;
+      width: 50%;
+      border-radius: 50%;
+      background-color: rgb(216, 168, 79);
+      z-index: 1;
+    }
+
+    &.is-selected::after {
+      width: 50%;
+    }
   }
 }
